@@ -9,12 +9,26 @@ app.listen(8000, () => {
     console.log('Server is running on port 8000')
 })
 
-const db = [
-    { id: 1, author: 'John Doe', text: 'This company is worth every coin!' },
-    { id: 2, author: 'Amanda Doe', text: 'They really know how to make you happy.' },
-];
 
-app.get('testimonials', (req, res) => {
+app.get('/testimonials', (req, res) => {
     res.render(db);
+}) 
+
+app.get('/testimonialas/:id', (req, res) => {
+    res.json({id: req.params.id });
+})
+
+app.get('/testimonials/random', (req, res) => {
+    const randomIndex = Math.floor(db.length * Math.random())
+    res.json(db[randomIndex]);
+})
+
+app.post('/testimonials', (req, res) => {
+    const { author, text} = req.body;
+    res.json({author, text})
+})
+
+app.put('/testimonials/:id', (req, res) => {
+
 })
 
