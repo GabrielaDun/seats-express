@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router();
-const testimonials = require('./db');
+const testimonials = require('./../db');
 
 // Testimonials
 router.route('/testimonials').get((req, res) => {

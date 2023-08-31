@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router();
-const seats = require('./db');
+const seats = require('./../db');
 
 // Seats
 
