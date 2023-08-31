@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router();
-const concerts = require('./../db');
-
+const db = require('./../db');
+const concerts = db.concerts;
 
 // Concert
 
@@ -15,8 +15,8 @@ router.route('/concerts/:id').get((req, res) => {
 })
 
 router.route('/concerts').post((req, res) => {
-    const { author, text } = req.body
-    res.json({author, text, message: 'ok'})
+    const { performer, genre, price, day, image } = req.body
+    res.json({performer, genre, price, day, image, massage : 'ok'})
 })
 
 router.route('/concerts').put((req, res) => {
@@ -26,8 +26,11 @@ router.route('/concerts').put((req, res) => {
         return res.status(404).send({message: 'Concert with the givern ID was not found'})
     }
 
-    concert.author = req.body.author
-    concert.text = req.body.text
+    concert.performer = req.body.performer
+    concert.genre = req.body.genre
+    concert.price = req.body.price
+    concert.day = req.body.day
+    concert.image = req.body.image
 
     res.send({message: 'OK'})
 
@@ -41,7 +44,7 @@ router.route('/concerts/:id').delete((req, res) => {
     }
     const leftConcerts = seats.splice(index, 1)
 
-    res.json({messgae: ok, leftConcerts})
+    res.json({messgae: 'ok', leftConcerts})
 })
 
 

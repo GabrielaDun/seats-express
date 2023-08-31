@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router();
-const seats = require('./../db');
+const db = require('./../db');
+const seats = db.seats;
 
 // Seats
 
@@ -14,8 +15,8 @@ router.route('/seats/:id').get((req, res) => {
 })
 
 router.route('/seats').post((req, res) => {
-    const {author, text} = req.body;
-    res.json( {author, text})
+    const {day, seat, client, email} = req.body;
+    res.json( {day, seat, client, email})
 })
 
 router.route('/seats/:id').put((req, res) => {
@@ -25,8 +26,10 @@ router.route('/seats/:id').put((req, res) => {
         return res.status(404).send({ message: 'Seat with the given ID was not found'})
     }
 
-    seat.author = req.body.author
-    seat.text = req.body.text
+    seat.day = req.body.day
+    seat.seat = req.body.seat
+    seat.client = req.body.client
+    seat.email = req.body.email
 
     res.send({message: 'OK'})
 })
@@ -40,7 +43,7 @@ router.route('/seats/:id').delete((req, res) => {
 
     const leftSeat = seats.splice(index, 1)
 
-    res.send({message: OK, leftSeat})
+    res.send({message: 'OK', leftSeat})
 
 })
 
