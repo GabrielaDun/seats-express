@@ -15,6 +15,11 @@ router.route('/seats/:id').get((req, res) => {
 })
 
 router.route('/seats').post((req, res) => {
+    const seatsFree = seats.find(d => d.day === parseInt(req.params.day) && d.seat === parseInt(req.params.seat));
+
+    if (!seatsFree) {
+        return res.status(404).send({ message: 'Seat with the given ID is already taken' })
+    }
     const {day, seat, client, email} = req.body;
     res.json( {day, seat, client, email})
 })
