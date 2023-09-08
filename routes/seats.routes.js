@@ -15,13 +15,18 @@ router.route('/seats/:id').get((req, res) => {
 })
 
 router.route('/seats').post((req, res) => {
-    const seatsFree = seats.find(d => d.day === parseInt(req.params.day) && d.seat === parseInt(req.params.seat));
+    const {day, seat, client, email} = req.body;
+    
+    const seatsFree = seats.some(item => item.seat == seat && item.day == day);
 
     if (!seatsFree) {
         return res.status(404).send({ message: 'Seat with the given ID is already taken' })
-    }
-    const {day, seat, client, email} = req.body;
+    } else {
+
+    req.io.emit('seatsUpdated', db.seats);
     res.json( {day, seat, client, email})
+    }
+    
 })
 
 router.route('/seats/:id').put((req, res) => {
