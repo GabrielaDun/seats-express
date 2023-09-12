@@ -17,12 +17,12 @@ router.route('/seats/:id').get((req, res) => {
 router.route('/seats').post((req, res) => {
     const {day, seat, client, email} = req.body;
     
-    const seatsFree = seats.some(item => item.seat == seat && item.day == day);
+    const seatsBusy = seats.some(item => item.seat == seat && item.day == day);
 
-    if (!seatsFree) {
+    if (seatsBusy) {
         return res.status(404).send({ message: 'Seat with the given ID is already taken' })
     } else {
-
+        seats.push({ day, seat, client, email})
     req.io.emit('seatsUpdated', db.seats);
     res.json( {day, seat, client, email})
     }
