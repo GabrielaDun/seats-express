@@ -1,0 +1,63 @@
+const Concerts = require('../models/concert.models')
+
+exports.getAll = async (req, res) => {
+    try {
+        res.json(await Concerts.find() )
+    }
+    catch(err) {
+        res.status(500).json({ message: err })
+    }
+}
+
+exports.getAllById = async (req, res) => {
+    try {
+        const concert = await Concerts.findById(req.params.id);
+        if(!concert) res.status(404).json( { message: 'Not found' });
+        else res.json(concert);
+        
+    } catch(err) {
+        res.status(500).json({ message: err })
+    }
+}
+
+exports.postById =  async (req, res) => {
+    try {
+        const { performer, genre, price, day, image } = req.body;
+        const newConcert = new Concerts({ performer: performer, genre: genre, price:price, day:day, image:image})
+        await newConcert.save()
+        res.json( { message: 'OK'})
+    } 
+    catch(err) {
+        res.status(500).json( { message: err})
+    }
+}
+
+exports.putById = async (req, res) => {
+    const { performer, genre, price, day, image } = req.body;
+    try {
+        const changedConcert = await Concerts.findById(req.params.id);
+        if (!changedConcert) res.status(404).json({ message: 'Not found'})
+        else {
+            await Concerts.updateOne({ _id: req.params.id }, {$set: {performer: performer, genre: genre, price: price, day: day, image: image}})
+            res.json( { message: 'OK' })
+        }
+    }
+    catch(err) {
+        res.status(500).json({ message: err })
+    }
+
+}
+
+exports.deleteById = async (req, res) => {
+    try {
+        const deleteConcert = await Concerts.findById(req.params.id);
+        if (!deleteConcert) res.status(404).json({ message: 'Not found'})
+        else {
+            await Concerts.deleteOne({_id: req.params.id})
+            res.json( { message: 'OK' })
+        }
+    } 
+    catch(err) {
+        res.status(500).json( { message: err })
+    }
+}
