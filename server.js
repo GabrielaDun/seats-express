@@ -37,7 +37,7 @@ app.get('*', (req, res) => {
 });
 
 
-mongoose.connect('mongodb://127.0.0.1:27017/NewWaveDB', { useNewUrlParser: true });
+mongoose.connect('mongodb+srv://gabriela9889:o2o2o2Tlen@cluster1.f8rpjqw.mongodb.net/NewWaveDB?retryWrites=true&w=majority', { useNewUrlParser: true });
 const db = mongoose.connection;
 
 db.once('open', () => {
