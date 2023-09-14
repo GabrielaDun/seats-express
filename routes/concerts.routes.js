@@ -15,3 +15,4 @@ router.put('/concerts/:id', ConcertController.putById)
 
 router.delete('/concerts/:id', ConcertController.deleteById)
 
+module.exports = router;

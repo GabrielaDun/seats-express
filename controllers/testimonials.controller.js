@@ -63,7 +63,7 @@ exports.putById = async (req, res) => {
     }
 }
 
-exports.putById = async (req, res) => {
+exports.deleteById = async (req, res) => {
     try {
         const deleteTesti = await Testimonials.findById(req.params.id)
         if(!deleteTesti) res.status(404).json({ message: 'Not found'})
