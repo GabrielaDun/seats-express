@@ -61,3 +61,52 @@ exports.deleteById = async (req, res) => {
         res.status(500).json( { message: err })
     }
 }
+
+exports.getConcertByPerformer = async (req,res) => {
+    try {
+        const concert = await Concerts.find({ performer: req.params.performer })
+        if(!concert) res.status(404).json( { message: 'Not found' });
+        else res.json(concert);
+    }
+    catch(err) {
+        res.status(500).json( { message: err })
+    }
+}
+
+exports.getConcertByGenre = async (req,res) => {
+    try {
+        const concert = await Concerts.find({ genre: req.params.genre })
+        if(!concert) res.status(404).json( { message: 'Not found' });
+        else res.json(concert);
+    }
+    catch(err) {
+        res.status(500).json( { message: err })
+    }
+}
+
+exports.getConcertByDay = async (req,res) => {
+    try {
+        const concert = await Concerts.find({ day: req.params.day })
+        if(!concert) res.status(404).json( { message: 'Not found' });
+        else res.json(concert);
+    }
+    catch(err) {
+        res.status(500).json( { message: err })
+    }
+}
+
+
+exports.getConcertByPriceRange = async (req,res) => {
+    const { price_min, price_max } = req.params;
+    if (isNaN(price_min) || isNaN(price_max)){
+        return res.status(400).json({ message: 'Invalid price range' })
+    }
+    try {
+        const concert = await Concerts.find({ price: { $gte: Number(price_min), $lte: Number(price_max)} })
+        if(!concert ) res.status(404).json( { message: 'Not found' });
+        else res.json(concert);
+    }
+    catch(err) {
+        res.status(500).json( { message: err })
+    }
+}
