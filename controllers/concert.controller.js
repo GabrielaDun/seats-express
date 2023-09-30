@@ -1,8 +1,19 @@
 const Concerts = require('../models/concert.models')
+const Seats = require('../models/seats.models')
 
 exports.getAll = async (req, res) => {
     try {
-        res.json(await Concerts.find() )
+        const concerts = await Concerts.find()
+        const updateConcerts = await Promise.all(concerts.map(async (concert) => {
+            const bookingConut = await Seats.find({ day: concert.day});
+            const seatsAvaliable = 50 - bookingConut.length;
+
+            concert = concert.toObject();
+            concert.tickets = seatsAvaliable
+
+            return concert
+        }))
+        res.json(updateConcerts)
     }
     catch(err) {
         res.status(500).json({ message: err })

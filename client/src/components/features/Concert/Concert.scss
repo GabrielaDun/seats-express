@@ -31,7 +31,6 @@
       opacity: 0.4;
       top: 0;
       left: 0;
-      -webkit-filter: grayscale(0.5) blur(2px);
     }
 
     &__performer {
@@ -46,11 +45,15 @@
 
     &__day-n-price {
       position: relative;
-      z-index: 2;
       margin: 0.5rem;
-      position: absolute;
-      bottom: 1rem;
-      left: 1.5rem;
+      top: 100px;
+    }
+    &__tickets {
+      opacity: 0.8;
+      font-size: 0.9rem;
+      position: relative;
+      top: 110px;
+      left: 1.5%;
     }
   
   }
@@ -79,6 +82,7 @@
     font-size: 1.8rem;
     margin: 0.5rem;
   }
+  
 
   .concert__info__genre {
     font-size: 1.5rem;
