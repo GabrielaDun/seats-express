@@ -4,6 +4,7 @@ const cors = require('cors');
 const path = require('path');
 const socket = require('socket.io')
 const mongoose = require('mongoose')
+const helmet = require('helmet');
 
 const server = app.listen(process.env.PORT || 8000, () => {
   console.log('Server is running on port 8000')
@@ -19,6 +20,7 @@ const seatsRouter = require('./routes/seats.routes');
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(helmet());
 app.use((req, res, next) => {
   req.io = io;
   next();
